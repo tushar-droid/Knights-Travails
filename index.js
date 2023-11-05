@@ -5,10 +5,12 @@ const knightMoves = (start, end) =>{
     const graph = {};
     qu.push(current_move);
     while(qu.length > 0){
-        console.log('ran...')
         current_move = qu.shift()
-        if(st.has(current_move)) continue;
-        st.add(current_move);
+        if(st.has(String(current_move))){
+            continue;
+        }
+        st.add(String(current_move));
+
         var moves = PossibleMoves(current_move);
         moves.forEach( move => {
             if(!(current_move in graph)) graph[current_move] = []
@@ -27,13 +29,13 @@ const knightMoves = (start, end) =>{
 
 const PossibleMoves = (node) =>{
     let arr = [];
-    var [x_val, y_val] = node;
+    var [x_val, y_val] = node;    
     const x_move = [1,1,2,2,-1,-1,-2,-2];
     const y_move = [2,-2,1,-1,2,-2,1,-1];
     for(var i = 0; i<x_move.length; i++){
         x_new_move = x_val + x_move[i];
         y_new_move = y_val + y_move[i];
-        if( (0<=x_new_move && x_new_move < 8) && (0<=y_new_move && y_new_move < 8) ) arr.push(`[${x_new_move},${y_new_move}]`);
+        if( (0<=x_new_move && x_new_move < 8) && (0<=y_new_move && y_new_move < 8) ) arr.push([x_new_move,y_new_move]);
     }
     return arr;
 }
