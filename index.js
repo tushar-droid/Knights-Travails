@@ -1,7 +1,37 @@
 const knightMoves = (start, end) =>{
     const graph = CreateGraph(start);
-    console.log(graph);
+    const queue = [[start, 0]];
+    const visited = new Set();
+    const parent = new Map();
+    
+    while(queue.length > 0){
+        var [current, distance] = queue.shift();
+        if(String(current) === String(end)){
+            var path = getPath(start,end, parent);
+            return path;}
+        for(let neigbor of graph[current]){
+            if(!visited.has(String(neigbor))){
+                visited.add(String(neigbor));
+                parent.set(String(neigbor), String(current))
+                queue.push( [neigbor, distance+1] );
+            }
+        }
+    }
+    return -1;
 }
+
+getPath = (startNode, endNode, parent) => {
+    const path = [[String(endNode)]];
+    let current = endNode;
+    while (String(current) !== String(startNode)) {
+      current = parent.get(String(current));
+      path.unshift([current]);
+    }
+    return path;
+  }
+
+
+
 
 const CreateGraph = (start) =>{
     const st = new Set();
@@ -10,7 +40,7 @@ const CreateGraph = (start) =>{
     const graph = {};
     qu.push(current_move);
     while(qu.length > 0){
-        current_move = qu.shift()
+        current_move = qu.shift();
         if(st.has(String(current_move))){
             continue;
         }
@@ -26,7 +56,6 @@ const CreateGraph = (start) =>{
         });
     }
     return graph
-
 }
 
 
@@ -46,13 +75,5 @@ const PossibleMoves = (node) =>{
 }
 
 
-
-// const searchPath =(start, end) =>{ 
-//     var end_val = `[${end}]`;
-//     var moves = new Set(PossibleMoves(start));
-//     console.log(moves.has(end_val));
-// }
-
-
-
-knightMoves([1,1],[3,0])
+const dist = knightMoves([0,0],[5,7])
+console.log('Distance fofrom that node to thjis node is: ', dist)
