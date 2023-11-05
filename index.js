@@ -1,4 +1,9 @@
 const knightMoves = (start, end) =>{
+    const graph = CreateGraph(start);
+    console.log(graph);
+}
+
+const CreateGraph = (start) =>{
     const st = new Set();
     const qu = [];
     var current_move = start;
@@ -20,10 +25,10 @@ const knightMoves = (start, end) =>{
             qu.push(move);
         });
     }
-    console.log(graph);
-
+    return graph
 
 }
+
 
 
 
